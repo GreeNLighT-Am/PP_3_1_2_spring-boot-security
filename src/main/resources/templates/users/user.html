@@ -30,9 +30,40 @@
         tr:hover {
             background-color: #f1f1f1; /* Цвет строки при наведении */
         }
+
+        /* Стили для сообщений */
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
+
+<!-- Вывод сообщения об успешной операции, если оно есть -->
+<div th:if="${successMessage}" class="success-message">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<!-- Вывод сообщения об ошибке, если оно есть -->
+<div th:if="${errorMessage}" class="error-message">
+    <p th:text="${errorMessage}"></p>
+
+    <p>Но вы можете добавить нового пользователя</p>
+
+    <form th:method="GET" th:action="@{/users/new}">
+        <input type="submit" value="Добавить нового пользователя"/>
+    </form>
+
+    <p>или вернуться</p>
+
+    <a th:href="@{/users}"><<< назад к списку пользователей</a>
+</div>
 
 <div>
     <h1>Пользователь</h1>
@@ -43,6 +74,8 @@
             <th>Имя</th>
             <th>Возраст</th>
             <th>email</th>
+            <th>пароль</th>
+            <th>роли</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +84,8 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.age}"></td>
             <td th:text="${user.email}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.roles}"></td>
         </tr>
         </tbody>
     </table>

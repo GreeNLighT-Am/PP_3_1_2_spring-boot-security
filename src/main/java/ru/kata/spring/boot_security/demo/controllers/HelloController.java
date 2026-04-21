@@ -1,8 +1,12 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import ru.kata.spring.boot_security.demo.models.User;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,13 @@ public class HelloController {
         messages.add("5.2.0 version by sep'19 ");
         model.addAttribute("messages", messages);
         return "index";
+    }
+
+
+    @GetMapping("/user")
+    public String printUser(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        return "user";
     }
 
 }

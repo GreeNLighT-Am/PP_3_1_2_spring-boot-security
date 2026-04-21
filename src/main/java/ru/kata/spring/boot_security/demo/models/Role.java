@@ -11,11 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 
 @Data
 @Entity
-@ToString
+@ToString(exclude = "users") // избегаем циклических ссылок в toString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
@@ -26,10 +29,16 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     private int id;
 
+    @Column(unique = true)
+    @NotEmpty(message = "Название роли не может быть пустым")
     private String role;
+
+    // Двунаправленная связь с User
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
 
     @Override
     public String getAuthority() {
-        return "";
+        return "ROLE_" + role; // добавляем префикс ROLE_
     }
 }
