@@ -84,25 +84,6 @@ public class UsersController {
         return "redirect:/users";
     }
 
-//    @GetMapping("/edit")
-//    public String editUser(@RequestParam(value = "id", required = false) Integer id, Model model) {
-//
-//        if (id == null || id <= 0) {
-//            model.addAttribute("errorMessage", "Ошибка редактирования пользователя: значение id не может быть пустым, 0 или отрицательным.");
-//            return "users/users";
-//        } else {
-//            try {
-//                model.addAttribute("user", userService.showUserById(id));
-//            } catch (EntityNotFoundException e) {
-//                model.addAttribute("errorMessage", String.format("Ошибка редактирования пользователя: %s", e.getMessage()));
-//                return "users/users";
-//            }
-//        }
-//
-//        return "users/edit";
-//    }
-
-
     @GetMapping("/edit")
     public String editUser(@RequestParam(value = "id", required = false) Integer id, Model model) {
         if (id == null || id <= 0) {
@@ -120,17 +101,6 @@ public class UsersController {
         }
         return "users/edit";
     }
-
-//    @PostMapping("/update")
-//    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult userBindingResult, RedirectAttributes redirectAttributes) {
-//        if (userBindingResult.hasErrors()) {
-//            return "users/edit";
-//        }
-//        userService.updateUser(user);
-//        redirectAttributes.addFlashAttribute("successMessage", "Пользователь успешно обновлён.");
-//
-//        return "redirect:/users/user?id=" + user.getId();
-//    }
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") @Valid User user,
@@ -166,6 +136,13 @@ public class UsersController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", String.format("Ошибка при удалении пользователя: %s", e.getMessage()));
         }
+
+//    } catch (EntityNotFoundException e) {
+//        redirectAttributes.addFlashAttribute("errorMessage", String.format("Пользователь с id=%d не найден.", id));
+//    } catch (IllegalArgumentException e) {
+//        redirectAttributes.addFlashAttribute("errorMessage", "Некорректный id пользователя.");
+//    }
+
         return "redirect:/users";
     }
 

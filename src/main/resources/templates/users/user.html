@@ -1,113 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/default :: layout(~{::title}, ~{::section})}">
 <head>
-    <meta charset="UTF-8">
-    <title>User</title>
-    <style>
-        /* Стили для таблицы */
-        table {
-            width: 50%;
-            border-collapse: collapse; /* Убирает двойные границы */
-            margin: 20px 0;
-            font-family: Arial, sans-serif;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2; /* Цвет фона для заголовков */
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9; /* Чередующийся цвет строк */
-        }
-
-        tr:hover {
-            background-color: #f1f1f1; /* Цвет строки при наведении */
-        }
-
-        /* Стили для сообщений */
-        .success-message {
-            color: green;
-            margin-bottom: 10px;
-        }
-
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
-        }
-    </style>
+    <title>Title from User page</title>
 </head>
 <body>
 
-<!-- Вывод сообщения об успешной операции, если оно есть -->
-<div th:if="${successMessage}" class="success-message">
-    <p th:text="${successMessage}"></p>
-</div>
+<section th:fragment="section">
 
-<!-- Вывод сообщения об ошибке, если оно есть -->
-<div th:if="${errorMessage}" class="error-message">
-    <p th:text="${errorMessage}"></p>
+    <!-- Контент страницы -->
 
-    <p>Но вы можете добавить нового пользователя</p>
+    <!-- Вывод сообщения об успешной операции, если оно есть -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
 
-    <form th:method="GET" th:action="@{/users/new}">
-        <input type="submit" value="Добавить нового пользователя"/>
+    <!-- Вывод сообщения об ошибке, если оно есть -->
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+
+        <p>Но вы можете добавить нового пользователя</p>
+
+        <form th:method="GET" th:action="@{/users/new}">
+            <input type="submit" value="Добавить нового пользователя"/>
+        </form>
+
+        <p>или вернуться</p>
+
+        <a th:href="@{/users}"><<< назад к списку пользователей</a>
+    </div>
+
+    <div>
+        <h1>Пользователь</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Email</th>
+                <th>Пароль</th>
+                <th>Роли</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.password}"></td>
+                <td>
+    <span th:each="role, iter : ${user.roles}"
+          th:text="${iter.index > 0 ? ', ' : ''} + ${#strings.replace(role.role, 'ROLE_', '')}">
+    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:method="GET" th:action="@{/users/edit(id=${user.id})}" th:object="${user}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <input type="submit" value="Редактировать"/>
     </form>
 
-    <p>или вернуться</p>
+    <br/>
+
+    <form th:method="POST" th:action="@{/users/delete}" th:object="${user}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <input type="submit" value="Удалить"
+               th:onclick="return confirm('Вы уверены, что хотите удалить пользователя?')"/>
+    </form>
+
+    <hr/>
 
     <a th:href="@{/users}"><<< назад к списку пользователей</a>
-</div>
 
-<div>
-    <h1>Пользователь</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>id</th>
-            <th>Имя</th>
-            <th>Возраст</th>
-            <th>email</th>
-            <th>пароль</th>
-            <th>роли</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.age}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.password}"></td>
-            <td th:text="${user.roles}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<form th:method="GET" th:action="@{/users/edit(id=${user.id})}" th:object="${user}">
-    <input type="hidden" th:field="*{id}"/>
-
-    <input type="submit" value="Редактировать"/>
-</form>
-
-<br/>
-
-<form th:method="POST" th:action="@{/users/delete}" th:object="${user}">
-    <input type="hidden" th:field="*{id}"/>
-
-    <input type="submit" value="Удалить" th:onclick="return confirm('Вы уверены, что хотите удалить пользователя?')"/>
-</form>
-
-<hr/>
-
-<a th:href="@{/users}"><<< назад к списку пользователей</a>
+</section>
 
 </body>
 </html>

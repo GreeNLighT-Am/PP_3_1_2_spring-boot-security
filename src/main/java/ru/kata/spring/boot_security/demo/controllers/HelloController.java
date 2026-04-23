@@ -15,18 +15,12 @@ import java.util.List;
 public class HelloController {
 
     @GetMapping(value = "/")
-    public String printWelcome(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("I'm Spring MVC application");
-        messages.add("5.2.0 version by sep'19 ");
-        model.addAttribute("messages", messages);
+    public String indexPage() {
         return "index";
     }
 
-
     @GetMapping("/user")
-    public String printUser(@AuthenticationPrincipal User user, Model model) {
+    public String userPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         return "user";
     }
