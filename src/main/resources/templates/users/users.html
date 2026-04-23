@@ -31,6 +31,13 @@
 
     <!-- Таблица отображается только если нет ошибки -->
     <div th:if="${errorMessage == null}">
+
+        <h1 th:text="'Добро пожаловать, ' + ${#request.userPrincipal.name} + '!'">Welcome message</h1>
+
+        <hr/>
+
+        <br/>
+
         <form th:method="GET" th:action="@{/users/new}">
             <input type="submit" value="Добавить нового пользователя"/>
         </form>
@@ -54,6 +61,9 @@
             </tr>
             </tbody>
         </table>
+
+        <hr/>
+
     </div>
 
 </section>

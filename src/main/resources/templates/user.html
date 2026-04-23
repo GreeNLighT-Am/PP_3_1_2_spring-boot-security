@@ -9,11 +9,9 @@
 <section th:fragment="section">
 
     <!-- Контент страницы -->
-    <h1 th:text="'Добро пожаловать, ' + ${user.name} + '!'">User, welcome spring boot security page!</h1>
+    <h1 th:text="'Добро пожаловать, ' + ${user.name} + '!'">Welcome message</h1>
 
     <hr/>
-
-    <br/>
 
     <div>
         <h1>Ваши данные:</h1>
@@ -36,6 +34,8 @@
             </tbody>
         </table>
     </div>
+
+    <hr/>
 
 </section>
 

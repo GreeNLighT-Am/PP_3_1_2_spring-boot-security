@@ -45,7 +45,7 @@ public class UsersController {
         } else {
             try {
                 model.addAttribute("user", userService.showUserById(id));
-            } catch (EntityNotFoundException e) {
+            } catch (Exception e) {
                 model.addAttribute("errorMessage", String.format("Ошибка отображения пользователя: %s", e.getMessage()));
                 return "users/users";
             }

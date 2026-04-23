@@ -9,7 +9,10 @@
 <section th:fragment="section">
 
     <!-- Контент страницы -->
-    <h1>Welcome to Index PAGE!</h1>
+    <h1 th:if="${#request.userPrincipal != null}" th:text="'Добро пожаловать, ' + ${#request.userPrincipal.name} + '!'">
+        Welcome message</h1>
+
+    <h1 th:if="${#request.userPrincipal == null}">Welcome to Index PAGE!</h1>
 
 </section>
 
