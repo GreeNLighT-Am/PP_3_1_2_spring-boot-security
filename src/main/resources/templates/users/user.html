@@ -20,13 +20,13 @@
 
         <p>Но вы можете добавить нового пользователя</p>
 
-        <form th:method="GET" th:action="@{/users/new}">
+        <form th:method="GET" th:action="@{/admin/new}">
             <input type="submit" value="Добавить нового пользователя"/>
         </form>
 
         <p>или вернуться</p>
 
-        <a th:href="@{/users}"><<< назад к списку пользователей</a>
+        <a th:href="@{/admin}"><< Вернуться к списку пользователей</a>
     </div>
 
     <div>
@@ -59,7 +59,7 @@
         </table>
     </div>
 
-    <form th:method="GET" th:action="@{/users/edit(id=${user.id})}" th:object="${user}">
+    <form th:method="GET" th:action="@{/admin/edit(id=${user.id})}" th:object="${user}">
         <input type="hidden" th:field="*{id}"/>
 
         <input type="submit" value="Редактировать"/>
@@ -67,7 +67,7 @@
 
     <br/>
 
-    <form th:method="POST" th:action="@{/users/delete}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin/delete}" th:object="${user}">
         <input type="hidden" th:field="*{id}"/>
 
         <input type="submit" value="Удалить"
@@ -76,7 +76,7 @@
 
     <br/>
 
-    <a th:href="@{/users}"><< Вернуться к списку пользователей</a>
+    <a th:href="@{/admin}"><< Вернуться к списку пользователей</a>
 
     <hr/>
 

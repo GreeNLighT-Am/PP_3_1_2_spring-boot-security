@@ -20,28 +20,37 @@
 
         <p>Но вы можете добавить нового пользователя</p>
 
-        <form th:method="GET" th:action="@{/users/new}">
+        <form th:method="GET" th:action="@{/admin/new}">
             <input type="submit" value="Добавить нового пользователя"/>
         </form>
 
         <p>или вернуться</p>
 
-        <a th:href="@{/users}"><<< назад к списку пользователей</a>
+        <a th:href="@{/admin}"><< Вернуться к списку пользователей</a>
     </div>
 
     <!-- Таблица отображается только если нет ошибки -->
     <div th:if="${errorMessage == null}">
 
-        <h1 th:text="'Добро пожаловать, ' + ${#request.userPrincipal.name} + '!'">Welcome message</h1>
+        <h1 th:text="${#request.userPrincipal.name} + ', добро пожаловать на страницу администрирования!'">Welcome message</h1>
+
+        <div style="text-align: left; margin: 20px 0;">
+            <form th:action="@{/user}" method="get" style="display: inline;">
+                <button type="submit"
+                        style="background: gray; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                    Персональная страница
+                </button>
+            </form>
+        </div>
 
         <hr/>
 
         <br/>
 
-        <form th:method="GET" th:action="@{/users/new}">
+        <form th:method="GET" th:action="@{/admin/new}">
             <input type="submit" value="Добавить нового пользователя"/>
         </form>
-        <h1>Список пользователей</h1>
+        <h1>Список пользователей:</h1>
         <table>
             <thead>
             <tr>
@@ -53,7 +62,7 @@
             </thead>
             <tbody>
             <tr th:each="user : ${users}" style="cursor: pointer;"
-                th:onclick="|window.location.href='@{/users/user(id=${user.id})}'|">
+                th:onclick="|window.location.href='@{/admin/user(id=${user.id})}'|">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.age}"></td>
@@ -61,6 +70,8 @@
             </tr>
             </tbody>
         </table>
+
+        <a th:href="@{/}" style="display: block; text-align: center; width: 100%;">На главную страницу</a>
 
         <hr/>
 

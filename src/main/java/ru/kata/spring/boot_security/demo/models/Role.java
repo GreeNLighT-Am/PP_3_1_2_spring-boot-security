@@ -18,10 +18,10 @@ import java.util.Collection;
 
 @Data
 @Entity
-@ToString(exclude = "users") // избегаем циклических ссылок в toString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
+@ToString(exclude = "users") // избегаем циклических ссылок в toString
 public class Role implements GrantedAuthority {
 
     @Id

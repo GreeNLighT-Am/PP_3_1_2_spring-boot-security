@@ -5,10 +5,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -31,12 +31,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public User showUserById(int id) {
+    public Optional<User> showUserById(int id) {
         User user = entityManager.find(User.class, id);
-        if (user == null) {
-            throw new EntityNotFoundException("Пользователь с id " + id + " не найден.");
-        }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -48,7 +45,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional
     public void deleteUserById(int id) {
-        entityManager.remove(showUserById(id));
+        showUserById(id).ifPresent(entityManager::remove);
     }
 
 }
