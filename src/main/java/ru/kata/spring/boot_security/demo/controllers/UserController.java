@@ -1,17 +1,27 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
+
     @GetMapping("/user")
-    public String userPage(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", user);
+    public String userPage(Principal principal, Model model) {
+        Optional<User> autorisedUser = userService.findUserByName(principal.getName());
+        if (autorisedUser.isPresent()) {
+            model.addAttribute("user", autorisedUser.get());
+        }
         return "user";
     }
 

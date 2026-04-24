@@ -3,7 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
@@ -13,43 +13,60 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public void addUser(User user) {
         // Хэшируем пароль перед сохранением
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.addUser(user);
+        userRepository.save(user);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findUserByName(String username) {
+        return userRepository.findUserByName(username);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<User> showAllUsers() {
-        return userDao.showAllUsers();
+        return userRepository.showAllUsers();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> showUserById(int id) {
-        return userDao.showUserById(id);
+        return userRepository.showUserById(id);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
 //        // Хэшируем пароль, если он был изменён
-        Optional<User> existingUser = userDao.showUserById(user.getId());
+        Optional<User> existingUser = userRepository.showUserById(user.getId());
         if (existingUser.isPresent() && user.getPassword() != null && !user.getPassword().equals(existingUser.get().getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        userDao.updateUser(user);
+        userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void deleteUserById(int id) {
-        userDao.deleteUserById(id);
+        userRepository.deleteById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isNameUnique(String name, Integer userId) {
         Optional<User> existingUser = userRepository.findUserByName(name);
         if (existingUser.isEmpty()) {
@@ -63,6 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isEmailUnique(String email, Integer userId) {
         Optional<User> existingUser = userRepository.findUserByEmail(email);
         if (existingUser.isEmpty()) {
