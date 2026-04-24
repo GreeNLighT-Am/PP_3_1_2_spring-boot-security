@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.models.User;
@@ -14,9 +15,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void addUser(User user) {
+        // Хэшируем пароль перед сохранением
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.addUser(user);
     }
 
@@ -31,8 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User updatedUser) {
-        userDao.updateUser(updatedUser);
+    public void updateUser(User user) {
+//        // Хэшируем пароль, если он был изменён
+        Optional<User> existingUser = userDao.showUserById(user.getId());
+        if (existingUser.isPresent() && user.getPassword() != null && !user.getPassword().equals(existingUser.get().getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        userDao.updateUser(user);
     }
 
     @Override

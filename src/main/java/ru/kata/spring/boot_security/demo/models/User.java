@@ -58,7 +58,7 @@ public class User implements UserDetails {
 
     @Column
     @NotEmpty(message = "Пароль не должен быть пустым")
-    @Size(min = 4, max = 20, message = "Длина пароля должна быть от 4-х до 10-ти знаков")
+    @Size(min = 4, message = "Длина пароля должна быть от 4-х знаков")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

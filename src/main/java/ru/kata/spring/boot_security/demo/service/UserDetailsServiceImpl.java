@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.isEmpty())
             throw new UsernameNotFoundException("Пользователь " + username + " не найден");
 
-        return user.get();
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),
+                user.get().getAuthorities());
     }
 }
