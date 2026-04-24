@@ -9,7 +9,7 @@
 <section th:fragment="section">
 
     <!-- Контент страницы -->
-    <h1 th:text="'Добро пожаловать, ' + ${user.name} + ' !'">Welcome message</h1>
+    <h1 th:text="'Добро пожаловать, ' + ${user.name} + '!'">Welcome message</h1>
 
     <div th:if="${#request.userPrincipal != null and #request.isUserInRole('ADMIN')}"
          style="text-align: left; margin: 20px 0;">

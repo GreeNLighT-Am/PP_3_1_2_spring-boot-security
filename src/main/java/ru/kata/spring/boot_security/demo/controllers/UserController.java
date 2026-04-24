@@ -7,12 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.models.User;
 
 @Controller
-public class HelloController {
-
-    @GetMapping(value = "/")
-    public String indexPage() {
-        return "index";
-    }
+public class UserController {
 
     @GetMapping("/user")
     public String userPage(@AuthenticationPrincipal User user, Model model) {

@@ -25,14 +25,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(readOnly = true)
     public List<User> showAllUsers() {
-        TypedQuery<User> query = entityManager.createQuery("FROM User", User.class);
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles", User.class);
         return query.getResultList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<User> showUserById(int id) {
-        User user = entityManager.find(User.class, id);
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.id = :id", User.class);
+        query.setParameter("id", id);
+        User user = query.getSingleResult();
         return Optional.ofNullable(user);
     }
 
