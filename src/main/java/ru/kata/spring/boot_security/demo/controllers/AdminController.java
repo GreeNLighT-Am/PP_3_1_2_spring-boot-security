@@ -62,9 +62,11 @@ public class AdminController {
     public String addUser(@ModelAttribute("user") @Valid User user,
                           BindingResult userBindingResult,
                           @RequestParam(value = "roles", required = false) List<Integer> roleIds,
-                          RedirectAttributes redirectAttributes) {
+                          RedirectAttributes redirectAttributes,
+                          Model model) {
 
         if (userBindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleRepository.findAll());
             return "users/new";
         }
 
@@ -105,9 +107,10 @@ public class AdminController {
     public String updateUser(@ModelAttribute("user") @Valid User user,
                              BindingResult userBindingResult,
                              @RequestParam(value = "roles", required = false) List<Integer> roleIds,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes, Model model) {
 
         if (userBindingResult.hasErrors()) {
+            model.addAttribute("allRoles", roleRepository.findAll());
             return "users/edit";
         }
 
