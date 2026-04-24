@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kata.spring.boot_security.demo.models.Role;
@@ -65,6 +66,24 @@ public class AdminController {
                           RedirectAttributes redirectAttributes,
                           Model model) {
 
+        // Проверка уникальности имени пользователя
+        if (!userService.isNameUnique(user.getName(), user.getId())) {
+            userBindingResult.rejectValue(
+                    "name",
+                    "error.user",
+                    "Пользователь с таким именем уже существует"
+            );
+        }
+
+        // Проверка уникальности email пользователя
+        if (!userService.isEmailUnique(user.getEmail(), user.getId())) {
+            userBindingResult.rejectValue(
+                    "email",
+                    "error.email",
+                    "Пользователь с таким email уже существует"
+            );
+        }
+
         if (userBindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleRepository.findAll());
             return "users/new";
@@ -108,6 +127,24 @@ public class AdminController {
                              BindingResult userBindingResult,
                              @RequestParam(value = "roles", required = false) List<Integer> roleIds,
                              RedirectAttributes redirectAttributes, Model model) {
+
+        // Проверка уникальности имени пользователя
+        if (!userService.isNameUnique(user.getName(), user.getId())) {
+            userBindingResult.rejectValue(
+                    "name",
+                    "error.user",
+                    "Пользователь с таким именем уже существует"
+            );
+        }
+
+        // Проверка уникальности email пользователя
+        if (!userService.isEmailUnique(user.getEmail(), user.getId())) {
+            userBindingResult.rejectValue(
+                    "email",
+                    "error.email",
+                    "Пользователь с таким email уже существует"
+            );
+        }
 
         if (userBindingResult.hasErrors()) {
             model.addAttribute("allRoles", roleRepository.findAll());

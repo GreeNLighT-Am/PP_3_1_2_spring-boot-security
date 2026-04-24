@@ -6,12 +6,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.models.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findUserByName(String username);
 
+    Optional<User> findUserByEmail(String email);
+
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.name = :username")
     Optional<User> findUserWithRolesByName(@Param("username") String username);
 }
+
