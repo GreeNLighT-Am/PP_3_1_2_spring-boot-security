@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.controllers;
+package com.greenlight.spring_boot_security.controllers;
 
 import javax.validation.Valid;
 
@@ -8,10 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import com.greenlight.spring_boot_security.models.Role;
+import com.greenlight.spring_boot_security.models.User;
+import com.greenlight.spring_boot_security.repositories.RoleRepository;
+import com.greenlight.spring_boot_security.service.UserService;
 
 import java.util.Collection;
 import java.util.Collections;

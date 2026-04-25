@@ -1,6 +1,6 @@
-package ru.kata.spring.boot_security.demo.service;
+package com.greenlight.spring_boot_security.service;
 
-import ru.kata.spring.boot_security.demo.models.User;
+import com.greenlight.spring_boot_security.models.User;
 
 import java.util.List;
 import java.util.Optional;

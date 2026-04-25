@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.models;
+package com.greenlight.spring_boot_security.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.service;
+package com.greenlight.spring_boot_security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import com.greenlight.spring_boot_security.models.User;
+import com.greenlight.spring_boot_security.repositories.UserRepository;
 
 import java.util.Optional;
 

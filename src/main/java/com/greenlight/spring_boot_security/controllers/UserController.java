@@ -1,11 +1,11 @@
-package ru.kata.spring.boot_security.demo.controllers;
+package com.greenlight.spring_boot_security.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import com.greenlight.spring_boot_security.models.User;
+import com.greenlight.spring_boot_security.service.UserService;
 
 import java.security.Principal;
 import java.util.Optional;
