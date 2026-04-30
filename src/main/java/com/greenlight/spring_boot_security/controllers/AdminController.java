@@ -2,10 +2,13 @@ package com.greenlight.spring_boot_security.controllers;
 
 import javax.validation.Valid;
 
+import com.greenlight.spring_boot_security.validation.OnCreate;
+import com.greenlight.spring_boot_security.validation.OnUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.greenlight.spring_boot_security.models.Role;
@@ -59,7 +62,7 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute("user") @Valid User user,
+    public String addUser(@ModelAttribute("user") @Validated(OnCreate.class) User user,
                           BindingResult userBindingResult,
                           @RequestParam(value = "roles", required = false) List<Integer> roleIds,
                           RedirectAttributes redirectAttributes,
@@ -122,7 +125,7 @@ public class AdminController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") @Valid User user,
+    public String updateUser(@ModelAttribute("user") @Validated(OnUpdate.class) User user,
                              BindingResult userBindingResult,
                              @RequestParam(value = "roles", required = false) List<Integer> roleIds,
                              RedirectAttributes redirectAttributes, Model model) {

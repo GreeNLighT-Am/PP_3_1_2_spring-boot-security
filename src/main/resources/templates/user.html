@@ -32,7 +32,6 @@
                 <th>Имя</th>
                 <th>Возраст</th>
                 <th>Email</th>
-                <th th:if="${#request.isUserInRole('ADMIN')}">Пароль(хеш)</th>
                 <th>Роли</th>
             </tr>
             </thead>
@@ -42,8 +41,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.age}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.password}" th:if="${#request.isUserInRole('ADMIN')}"></td>
-                <td>
+                                <td>
     <span th:each="role, iter : ${user.roles}"
           th:text="${iter.index > 0 ? ', ' : ''} + ${#strings.replace(role.role, 'ROLE_', '')}">
     </span>

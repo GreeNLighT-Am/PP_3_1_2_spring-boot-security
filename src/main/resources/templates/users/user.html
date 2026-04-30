@@ -38,7 +38,6 @@
                 <th>Имя</th>
                 <th>Возраст</th>
                 <th>Email</th>
-                <th>Пароль(хеш)</th>
                 <th>Роли</th>
             </tr>
             </thead>
@@ -48,7 +47,6 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.age}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.password}"></td>
                 <td>
     <span th:each="role, iter : ${user.roles}"
           th:text="${iter.index > 0 ? ', ' : ''} + ${#strings.replace(role.role, 'ROLE_', '')}">
